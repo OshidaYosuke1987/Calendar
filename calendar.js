@@ -1,5 +1,5 @@
 var today = new Date();
-//var today = new Date( '2011/03/11');
+var today = new Date( '2011/07/29');
 var weekDay = "日月火水木金土";
 var year = today.getFullYear();
 var month = today.getMonth() + 1;
@@ -7,6 +7,8 @@ var startDate = new Date(year, month - 1, 1);
 var endDate = new Date(year, month, 0);
 var endDayCount = endDate.getDate();
 var startDay = startDate.getDay();
+var lastMonthEndDate = new Date(year, month - 1, 0);
+var lastMonthEndDay = lastMonthEndDate.getDate();
 var calendarDate = 1;
 /*
 document.write('StartDate: ' + startDate + '<br>');
@@ -38,26 +40,28 @@ document.write('</tr>');
 //Body part: Calendar days
 document.write('<tr>');
 // Draw an outer frame of calendar
-for (let wm = 0; wm < 5; wm++) {
+for (let wm = 0; wm < 6; wm++) {
   // Make inner frame of calendar
   for (let w = 0; w < weekDay.length; w++) {
-    document.write('<td>');
-//    document.write(calendarDate);
-//    calendarDate++;
+//    document.write('<td>');
+    var tagTable = '<td';
     // Before the first day of this month
     if (wm == 0 && w < startDay) {
-
+      var num = lastMonthEndDay - startDay + w + 1;
+      tagTable += ' id=is_disabled>';
+      tagTable += num;
     } else if (calendarDate > endDayCount) {
-
+      num = calendarDate - endDayCount;
+      tagTable += ' id=is_disabled>' + num;
+      calendarDate++;
     } else {
-      document.write(calendarDate);
+      tagTable += '>' + calendarDate;
       calendarDate++;
     }
-    document.write('</td>');
+    document.write(tagTable);
     if (w == 6) {
       document.write('</tr>');
     }
   }
 }
-//document.write('</tr>');
 document.write('</table>');
